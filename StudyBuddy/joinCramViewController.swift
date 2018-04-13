@@ -9,7 +9,11 @@
 import UIKit
 
 class joinCramViewController: UIViewController {
-
+    
+    @IBAction func backToMapView(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

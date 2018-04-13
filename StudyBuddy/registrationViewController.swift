@@ -10,6 +10,10 @@ import UIKit
 
 class registrationViewController: UIViewController {
 
+    @IBAction func backToLogin(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
