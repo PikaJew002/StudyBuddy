@@ -8,17 +8,40 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class mapViewController: UIViewController {
+class mapViewController: UIViewController, CLLocationManagerDelegate{
+    let locManager = CLLocationManager()
+    
+    //map view that displays current CramJams and their locations
+    @IBOutlet weak var cramJamMap: MKMapView!
+    
+    func centerMapOnLocation(location: CLLocation, regionRadius: CLLocationDistance){ //centers map on location. I got this from https://www.raywenderlich.com/160517/mapkit-tutorial-getting-started
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
+        cramJamMap.setRegion(coordinateRegion, animated: true)
+    }
     
     @IBAction func backToLogin(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let curLocation = locations[locations.count - 1]
+        centerMapOnLocation(location: curLocation, regionRadius: 500)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        //centerMapOnLocation(location: initialLocation)    //testing
+        
+        locManager.delegate = self
+        locManager.desiredAccuracy = kCLLocationAccuracyBest
+        locManager.distanceFilter = 25 //number of meters user must move before the map updates
+        locManager.requestWhenInUseAuthorization()
+        locManager.startUpdatingLocation()
     }
 
     override func didReceiveMemoryWarning() {
