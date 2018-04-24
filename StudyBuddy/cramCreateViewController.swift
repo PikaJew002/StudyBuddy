@@ -9,9 +9,17 @@
 import UIKit
 
 class cramCreateViewController: UIViewController {
-
+    @IBOutlet weak var startTime: UIDatePicker!
+    @IBOutlet weak var endTime: UIDatePicker!
+    @IBOutlet weak var cramDescription: UITextView!
+    @IBOutlet weak var maxAttendees: UITextField!
+    // Need to connect picker view, and add stuff to it later.
     @IBAction func backToMapView(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func dismissKeyboard(_ sender: Any) {
+        self.view.endEditing(true)
     }
     
     override func viewDidLoad() {
