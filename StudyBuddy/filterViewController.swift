@@ -10,6 +10,31 @@ import UIKit
 
 class filterViewController: UIViewController {
     
+    @IBOutlet weak var amountSwitch: UISwitch!
+    @IBOutlet weak var timeSwitch: UISwitch!
+    @IBOutlet weak var subjectSwitch: UISwitch!
+    @IBOutlet weak var amountTextField: UITextField!
+    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var SubjectLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var SubjectTextField: UITextField!
+    @IBOutlet weak var timePicker: UIDatePicker!
+    
+    @IBAction func showSubject(_ sender: UISwitch) {
+        SubjectLabel.isHidden = !subjectSwitch.isOn
+        SubjectTextField.isHidden = !subjectSwitch.isOn
+    }
+    
+    @IBAction func showTime(_ sender: UISwitch) {
+        timeLabel.isHidden = !timeSwitch.isOn
+        timePicker.isHidden = !timeSwitch.isOn
+    }
+    
+    @IBAction func showAmount(_ sender: UISwitch) {
+        amountLabel.isHidden = !amountSwitch.isOn
+        amountTextField.isHidden = !amountSwitch.isOn
+    }
+    
     @IBAction func backToMapView(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
@@ -17,24 +42,20 @@ class filterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        subjectSwitch.setOn(false, animated: false)
+        timeSwitch.setOn(false, animated: false)
+        amountSwitch.setOn(false, animated: false)
+        timeLabel.isHidden = true
+        timePicker.isHidden = true
+        SubjectLabel.isHidden = true
+        SubjectTextField.isHidden = true
+        amountLabel.isHidden = true
+        amountTextField.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
