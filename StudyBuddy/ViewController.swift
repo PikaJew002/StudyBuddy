@@ -28,9 +28,7 @@ class ViewController: UIViewController {
     @IBAction func login(_ sender: UIButton) {
         if !username.text!.isEmpty && !password.text!.isEmpty {
             // select * from user where email = $email
-            getData() { isValid in
-                print(isValid)
-                // do something with the returned Bool
+            getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { isValid in
                 DispatchQueue.main.async {
                     if !self.user.email.isEmpty {
                         if self.password.text == self.user.password {
@@ -48,9 +46,17 @@ class ViewController: UIViewController {
         }
     }
     
-    func getData(completion: @escaping (Bool)->()) {
+    @IBAction func toRegistrationView(_ sender: UIButton) {
+        user = User(email: "", first_name: "", last_name: "", password: "", username: "")
+        performSegue(withIdentifier: "toRegistrationView", sender: self)
+    }
+    
+    func getData(table: String, condition: String, completion: @escaping (Bool)->()) {
         let id = "21232f297a57a5a743894a0e4a801fc3"
-        let urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=select&table=user&condition=email%20=%20%22\(username.text!)%22"
+        var urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=select&table=\(table)"
+        if !condition.isEmpty {
+            urlStr += "&condition=\(condition)"
+        }
         if let url = URL(string: urlStr) {
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                 do {

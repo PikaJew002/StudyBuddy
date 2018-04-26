@@ -10,8 +10,29 @@ import UIKit
 
 class registrationViewController: UIViewController {
 
+    @IBOutlet weak var firstName: UITextField!
+    @IBOutlet weak var lastName: UITextField!
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var password: UITextField!
+    
+    @IBOutlet weak var errorMessageLabel: UILabel!
+    
     @IBAction func backToLogin(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        if !firstName.text!.isEmpty && !lastName.text!.isEmpty && !email.text!.isEmpty && !username.text!.isEmpty && !password.text!.isEmpty {
+            (parent as! ViewController).getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { isValid in
+                DispatchQueue.main.async {
+                    if (self.parent as! ViewController).user.email.isEmpty {
+                        
+                        //self.dismiss(animated: true, completion: nil)
+                    } else {
+                        self.errorMessageLabel.text = "That user already exists!"
+                    }
+                }
+            }
+        } else {
+            errorMessageLabel.text = "You have empty fields!"
+        }
     }
     
     override func viewDidLoad() {

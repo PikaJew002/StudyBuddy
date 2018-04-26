@@ -59,7 +59,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="New to the app? Click here to register now!"/>
                                 <connections>
-                                    <segue destination="Srk-gP-Jqz" kind="presentation" id="r5m-dt-7pK"/>
+                                    <action selector="toRegistrationView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="U8v-aL-OdC"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LOGO GOES HERE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8l-4C-MOl">
@@ -85,6 +85,7 @@
                         <outlet property="password" destination="ILU-6s-sY4" id="4ZQ-gu-Y9n"/>
                         <outlet property="username" destination="Jq9-Bx-VPY" id="7P8-Ye-Vag"/>
                         <segue destination="7tf-kG-319" kind="presentation" identifier="toMapView" id="kjq-qM-INe"/>
+                        <segue destination="Srk-gP-Jqz" kind="presentation" identifier="toRegistrationView" id="MOt-JH-OMP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -194,10 +195,25 @@
                                     <action selector="backToLogin:" destination="Srk-gP-Jqz" eventType="touchUpInside" id="wqe-RZ-k8o"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qUr-Ji-HN1">
+                                <rect key="frame" x="16" y="536" width="343" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="ezp-6J-gbd"/>
                     </view>
+                    <connections>
+                        <outlet property="email" destination="Jgm-XC-yQy" id="SiP-tx-4LX"/>
+                        <outlet property="errorMessageLabel" destination="qUr-Ji-HN1" id="dDy-dn-0Ma"/>
+                        <outlet property="firstName" destination="bnT-2Q-s8P" id="jXZ-kz-3YD"/>
+                        <outlet property="lastName" destination="d9R-rn-jRv" id="Jga-VD-D2A"/>
+                        <outlet property="password" destination="wOD-tG-Rul" id="8Ua-Vg-09P"/>
+                        <outlet property="username" destination="sh7-Ed-txo" id="Q88-Ke-emd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lVl-F0-deI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
