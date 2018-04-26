@@ -69,11 +69,19 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbk-b7-yG8">
+                                <rect key="frame" x="16" y="523" width="320" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="errorMessageLabel" destination="mbk-b7-yG8" id="Wia-k4-66b"/>
                         <outlet property="password" destination="ILU-6s-sY4" id="4ZQ-gu-Y9n"/>
                         <outlet property="username" destination="Jq9-Bx-VPY" id="7P8-Ye-Vag"/>
                         <segue destination="7tf-kG-319" kind="presentation" identifier="toMapView" id="kjq-qM-INe"/>

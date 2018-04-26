@@ -21,22 +21,31 @@ class ViewController: UIViewController {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     
+    @IBOutlet weak var errorMessageLabel: UILabel!
+    
     var user: User = User(email: "", first_name: "", last_name: "", password: "", username: "")
     
     @IBAction func login(_ sender: UIButton) {
         if !username.text!.isEmpty && !password.text!.isEmpty {
             // select * from user where email = $email
-            if getData() {
-                performSegue(withIdentifier: "toMapView", sender: self)
+            getData()
+            if !user.email.isEmpty {
+                if {
+                    performSegue(withIdentifier: "toMapView", sender: self)
+                } else {
+                    
+                }
+            } else {
+                errorMessageLabel.text = "That user does not exist!"
             }
+            
         }
     }
     
-    func getData() -> Bool {
+    func getData() {
         let id = "21232f297a57a5a743894a0e4a801fc3"
         let urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=select&table=user&condition=email%20=%20%22\(username.text!)%22"
         if let url = URL(string: urlStr) {
-            var success = false
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                 do {
                     let decoder = JSONDecoder()
@@ -44,15 +53,11 @@ class ViewController: UIViewController {
                         self.user = try decoder.decode(User.self, from: data!)
                         print("success!")
                         print("Email: "+self.user.email)
-                        success = true
                     }
                 } catch {
                     
                 }
             }).resume()
-            return success
-        } else {
-            return false
         }
     }
     
