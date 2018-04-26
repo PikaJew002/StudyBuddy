@@ -28,21 +28,27 @@ class ViewController: UIViewController {
     @IBAction func login(_ sender: UIButton) {
         if !username.text!.isEmpty && !password.text!.isEmpty {
             // select * from user where email = $email
-            getData()
-            if !user.email.isEmpty {
-                if {
-                    performSegue(withIdentifier: "toMapView", sender: self)
-                } else {
-                    
+            getData() { isValid in
+                print(isValid)
+                // do something with the returned Bool
+                DispatchQueue.main.async {
+                    if !self.user.email.isEmpty {
+                        if self.password.text == self.user.password {
+                            self.performSegue(withIdentifier: "toMapView", sender: self)
+                        } else {
+                            self.errorMessageLabel.text = "Password that user is incorrect!"
+                        }
+                    } else {
+                        self.errorMessageLabel.text = "That user does not exist!"
+                    }
                 }
-            } else {
-                errorMessageLabel.text = "That user does not exist!"
             }
-            
+        } else {
+            errorMessageLabel.text = "You have empty username or password fields!"
         }
     }
     
-    func getData() {
+    func getData(completion: @escaping (Bool)->()) {
         let id = "21232f297a57a5a743894a0e4a801fc3"
         let urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=select&table=user&condition=email%20=%20%22\(username.text!)%22"
         if let url = URL(string: urlStr) {
@@ -51,13 +57,14 @@ class ViewController: UIViewController {
                     let decoder = JSONDecoder()
                     if data != nil {
                         self.user = try decoder.decode(User.self, from: data!)
-                        print("success!")
-                        print("Email: "+self.user.email)
+                        completion(true)
                     }
                 } catch {
-                    
+                    completion(false)
                 }
             }).resume()
+        } else {
+            completion(false)
         }
     }
     
