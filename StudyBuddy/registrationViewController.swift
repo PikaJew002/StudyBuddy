@@ -21,17 +21,40 @@ class registrationViewController: UIViewController {
     @IBAction func backToLogin(_ sender: UIButton) {
         if !firstName.text!.isEmpty && !lastName.text!.isEmpty && !email.text!.isEmpty && !username.text!.isEmpty && !password.text!.isEmpty {
             (parent as! ViewController).getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { isValid in
-                DispatchQueue.main.async {
-                    if (self.parent as! ViewController).user.email.isEmpty {
-                        
-                        //self.dismiss(animated: true, completion: nil)
-                    } else {
-                        self.errorMessageLabel.text = "That user already exists!"
-                    }
+                if (self.parent as! ViewController).user.email.isEmpty {
+                    
+                    //self.dismiss(animated: true, completion: nil)
+                } else {
+                    self.errorMessageLabel.text = "That user already exists!"
                 }
             }
         } else {
             errorMessageLabel.text = "You have empty fields!"
+        }
+    }
+    
+    func putData(table: String, values: [String], completion: @escaping (Bool)->()) {
+        let id = "21232f297a57a5a743894a0e4a801fc3"
+        var urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=insert&table=\(table)&values=VALUES("
+        for i in 0 ... values.count - 2 {
+            urlStr += "%22\(values[i])%22,%20"
+        }
+        urlStr += "%22\(values[i])%22)"
+        if let url = URL(string: urlStr) {
+            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+                do {
+                    let dataStr = try String(data: data!)
+                    if Int(dataStr) == 1 {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                } catch {
+                    completion(false)
+                }
+            }).resume()
+        } else {
+            completion(false)
         }
     }
     
