@@ -9,11 +9,11 @@
 import UIKit
 
 struct User: Codable {
-    var email: String
-    var first_name: String
-    var last_name: String
-    var password: String
-    var username: String
+    var email: String = ""
+    var first_name: String = ""
+    var last_name: String = ""
+    var password: String = ""
+    var username: String = ""
 }
 
 class ViewController: UIViewController {
@@ -23,22 +23,28 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var errorMessageLabel: UILabel!
     
-    var user: User = User(email: "", first_name: "", last_name: "", password: "", username: "")
+    var user: User = User()
     
     @IBAction func login(_ sender: UIButton) {
         if !username.text!.isEmpty && !password.text!.isEmpty {
             // select * from user where email = $email
             getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { isValid in
-                DispatchQueue.main.async {
-                    if !self.user.email.isEmpty {
-                        if self.password.text == self.user.password {
-                            self.performSegue(withIdentifier: "toMapView", sender: self)
-                        } else {
-                            self.errorMessageLabel.text = "Password that user is incorrect!"
-                        }
+                if isValid {
+                    // DispatchQueue.main.async {}, might need to put all UI updates in this after boolean check on isValid
+                    if self.password.text == self.user.password {
+                        self.username.text = ""
+                        self.password.text = ""
+                        self.performSegue(withIdentifier: "toMapView", sender: self)
                     } else {
-                        self.errorMessageLabel.text = "That user does not exist!"
+                        user = User()
+                        self.password.text = ""
+                        self.errorMessageLabel.text = "The password for that user is incorrect!"
                     }
+                } else {
+                    user = User()
+                    self.password.text = ""
+                    self.username.text = ""
+                    self.errorMessageLabel.text = "That user does not exist!"
                 }
             }
         } else {
@@ -63,7 +69,11 @@ class ViewController: UIViewController {
                     let decoder = JSONDecoder()
                     if data != nil {
                         self.user = try decoder.decode(User.self, from: data!)
-                        completion(true)
+                        if !self.user.email.isEmpty {
+                            completion(true)
+                        } else {
+                            completion(false)
+                        }
                     }
                 } catch {
                     completion(false)
