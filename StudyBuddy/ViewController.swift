@@ -29,22 +29,24 @@ class ViewController: UIViewController {
         if !username.text!.isEmpty && !password.text!.isEmpty {
             // select * from user where email = $email
             getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { isValid in
-                if isValid {
-                    // DispatchQueue.main.async {}, might need to put all UI updates in this after boolean check on isValid
-                    if self.password.text == self.user.password {
-                        self.username.text = ""
-                        self.password.text = ""
-                        self.performSegue(withIdentifier: "toMapView", sender: self)
+                DispatchQueue.main.async {
+                    if isValid {
+                        if self.password.text == self.user.password {
+                            self.username.text = ""
+                            self.password.text = ""
+                            self.errorMessageLabel.text = ""
+                            self.performSegue(withIdentifier: "toMapView", sender: self)
+                        } else {
+                            self.user = User()
+                            self.password.text = ""
+                            self.errorMessageLabel.text = "The password for that user is incorrect!"
+                        }
                     } else {
-                        user = User()
+                        self.user = User()
                         self.password.text = ""
-                        self.errorMessageLabel.text = "The password for that user is incorrect!"
+                        self.username.text = ""
+                        self.errorMessageLabel.text = "That user does not exist!"
                     }
-                } else {
-                    user = User()
-                    self.password.text = ""
-                    self.username.text = ""
-                    self.errorMessageLabel.text = "That user does not exist!"
                 }
             }
         } else {
@@ -74,6 +76,8 @@ class ViewController: UIViewController {
                         } else {
                             completion(false)
                         }
+                    } else {
+                        completion(false)
                     }
                 } catch {
                     completion(false)

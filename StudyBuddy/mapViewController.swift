@@ -13,6 +13,8 @@ import CoreLocation
 class mapViewController: UIViewController, CLLocationManagerDelegate{
     let locManager = CLLocationManager()
     
+    var user: User = User()
+    
     //map view that displays current CramJams and their locations
     @IBOutlet weak var cramJamMap: MKMapView!
     
@@ -22,12 +24,20 @@ class mapViewController: UIViewController, CLLocationManagerDelegate{
     }
     
     @IBAction func backToLogin(_ sender: UIButton) {
+        user = User()
         dismiss(animated: true, completion: nil)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let curLocation = locations[locations.count - 1]
         centerMapOnLocation(location: curLocation, regionRadius: 500)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        user = (presentingViewController as! ViewController).user
+        (presentingViewController as! ViewController).user = User()
     }
     
     override func viewDidLoad() {

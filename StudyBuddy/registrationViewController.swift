@@ -20,12 +20,31 @@ class registrationViewController: UIViewController {
     
     @IBAction func backToLogin(_ sender: UIButton) {
         if !firstName.text!.isEmpty && !lastName.text!.isEmpty && !email.text!.isEmpty && !username.text!.isEmpty && !password.text!.isEmpty {
-            (parent as! ViewController).getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { isValid in
-                if (self.parent as! ViewController).user.email.isEmpty {
-                    
-                    //self.dismiss(animated: true, completion: nil)
+            (presentingViewController as! ViewController).getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { isValid in
+                if isValid {
+                    self.putData(table: "user", values: [self.email.text!, self.firstName.text!, self.lastName.text!, self.password.text!, self.username.text!], completion: { (didComplete) in
+                        if didComplete {
+                            DispatchQueue.main.async {
+                                self.email.text = ""
+                                self.firstName.text = ""
+                                self.lastName.text = ""
+                                self.password.text = ""
+                                self.username.text = ""
+                                (self.parent as! ViewController).user = User()
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self.errorMessageLabel.text = "Something went wrong..."
+                            }
+                        }
+                    })
                 } else {
-                    self.errorMessageLabel.text = "That user already exists!"
+                    DispatchQueue.main.async {
+                        self.email.text = ""
+                        (self.presentingViewController as! ViewController).user = User()
+                        self.errorMessageLabel.text = "That user already exists!"
+                    }
                 }
             }
         } else {
@@ -39,17 +58,13 @@ class registrationViewController: UIViewController {
         for i in 0 ... values.count - 2 {
             urlStr += "%22\(values[i])%22,%20"
         }
-        urlStr += "%22\(values[i])%22)"
+        urlStr += "%22\(values[values.count - 1])%22)"
         if let url = URL(string: urlStr) {
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-                do {
-                    let dataStr = try String(data: data!)
-                    if Int(dataStr) == 1 {
-                        completion(true)
-                    } else {
-                        completion(false)
-                    }
-                } catch {
+                let dataStr = String(describing: data!)
+                if Int(dataStr) == 1 {
+                    completion(true)
+                } else {
                     completion(false)
                 }
             }).resume()
