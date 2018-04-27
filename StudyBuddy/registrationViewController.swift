@@ -20,33 +20,25 @@ class registrationViewController: UIViewController {
     
     @IBAction func backToLogin(_ sender: UIButton) {
         if !firstName.text!.isEmpty && !lastName.text!.isEmpty && !email.text!.isEmpty && !username.text!.isEmpty && !password.text!.isEmpty {
-            (presentingViewController as! ViewController).getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { isValid in
-                if isValid {
-                    self.putData(table: "user", values: [self.email.text!, self.firstName.text!, self.lastName.text!, self.password.text!, self.username.text!], completion: { (didComplete) in
-                        if didComplete {
-                            DispatchQueue.main.async {
-                                self.email.text = ""
-                                self.firstName.text = ""
-                                self.lastName.text = ""
-                                self.password.text = ""
-                                self.username.text = ""
-                                (self.parent as! ViewController).user = User()
-                                self.dismiss(animated: true, completion: nil)
-                            }
-                        } else {
-                            DispatchQueue.main.async {
-                                self.errorMessageLabel.text = "Something went wrong..."
-                            }
-                        }
-                    })
+            self.putData(table: "user", values: [self.email.text!, self.firstName.text!, self.lastName.text!, self.password.text!, self.username.text!], completion: { (didComplete) in
+                if didComplete {
+                    DispatchQueue.main.async {
+                        self.email.text = ""
+                        self.firstName.text = ""
+                        self.lastName.text = ""
+                        self.password.text = ""
+                        self.username.text = ""
+                        self.errorMessageLabel.text = ""
+                        (self.presentingViewController as! ViewController).errorMessageLabel.text = "User successfully created!"
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 } else {
                     DispatchQueue.main.async {
                         self.email.text = ""
-                        (self.presentingViewController as! ViewController).user = User()
-                        self.errorMessageLabel.text = "That user already exists!"
+                        self.errorMessageLabel.text = "A user with that email already exists!"
                     }
                 }
-            }
+            })
         } else {
             errorMessageLabel.text = "You have empty fields!"
         }
@@ -54,14 +46,16 @@ class registrationViewController: UIViewController {
     
     func putData(table: String, values: [String], completion: @escaping (Bool)->()) {
         let id = "21232f297a57a5a743894a0e4a801fc3"
-        var urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=insert&table=\(table)&values=VALUES("
+        var urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=insert&table=\(table)&values="
         for i in 0 ... values.count - 2 {
-            urlStr += "%22\(values[i])%22,%20"
+            urlStr += "%22\(values[i])%22%2C%20"
         }
-        urlStr += "%22\(values[values.count - 1])%22)"
+        urlStr += "%22\(values[values.count - 1])%22"
+        print(urlStr)
         if let url = URL(string: urlStr) {
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-                let dataStr = String(describing: data!)
+                let dataStr = String(decoding: data!, as: UTF8.self)
+                print(dataStr)
                 if Int(dataStr) == 1 {
                     completion(true)
                 } else {
