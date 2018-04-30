@@ -17,6 +17,7 @@ struct User: Codable {
 }
 
 struct CramJam: Codable {
+    var id: Int
     var host: String
     var start_time: String
     var end_time: String
