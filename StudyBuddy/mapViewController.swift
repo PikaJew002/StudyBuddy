@@ -14,8 +14,16 @@ struct CramJam: Codable {
     var host: String
     var start_time: String
     var end_time: String
+    var subject: String
     var max_peeps: Int
     var description: String
+    var location: String
+}
+
+struct Location: Codable {
+    var name: String
+    var lat: Decimal
+    var lon: Decimal
 }
 
 class mapViewController: UIViewController, CLLocationManagerDelegate{
@@ -74,7 +82,12 @@ class mapViewController: UIViewController, CLLocationManagerDelegate{
         getData(table: "cram_jam", condition: "") { isValid in
             DispatchQueue.main.async {
                 if isValid {
-                    // do something with cram jams, like update map with
+                    // do something with cram jams, like update map
+                    // this prints out the description of all cramjams for testing purposes
+                    for i in 0 ... self.cramJams.count - 1 {
+                        print("Description: "+self.cramJams[i].description)
+                    }
+                    
                 } else {
                     // give an error
                 }

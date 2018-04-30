@@ -362,7 +362,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Jb-eU-BAb">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mr6-35-J8I">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mr6-35-J8I">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                                                 <connections>
                                                     <action selector="dismissKeyboard:" destination="pSp-yv-pZi" eventType="touchUpInside" id="8eF-9D-336"/>
@@ -433,8 +433,8 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMx-o2-k3S">
-                                                <rect key="frame" x="152" y="625" width="71" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Choose a Location from the picker:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMx-o2-k3S">
+                                                <rect key="frame" x="8" y="577" width="359" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="GkA-ed-oqf"/>
                                                 </constraints>
@@ -442,11 +442,15 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KGE-Gg-hTO">
-                                                <rect key="frame" x="0.0" y="654" width="375" height="162"/>
+                                            <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KGE-Gg-hTO">
+                                                <rect key="frame" x="0.0" y="606" width="375" height="162"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="162" id="pFn-Ps-kqZ"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="pSp-yv-pZi" id="kVM-Cc-4h2"/>
+                                                    <outlet property="delegate" destination="pSp-yv-pZi" id="wmy-OI-EzM"/>
+                                                </connections>
                                             </pickerView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maximum Number of Attendees:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GD7-tc-Fbd">
                                                 <rect key="frame" x="73" y="814" width="248" height="21"/>
@@ -466,6 +470,21 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rij-2T-G7k">
+                                                <rect key="frame" x="119" y="766" width="137" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Create new location"/>
+                                                <connections>
+                                                    <segue destination="IsD-ny-1Mo" kind="presentation" id="M7i-kf-R0E"/>
+                                                </connections>
+                                            </button>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="There are no locations saved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQi-ch-cbT">
+                                                <rect key="frame" x="77" y="685" width="220" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -477,6 +496,7 @@
                                             <constraint firstAttribute="trailing" secondItem="8ae-hM-tXB" secondAttribute="trailing" constant="141" id="C77-XG-MsU"/>
                                             <constraint firstItem="Mcq-kO-eBF" firstAttribute="leading" secondItem="1Jb-eU-BAb" secondAttribute="leading" constant="129" id="DsG-n8-zXT"/>
                                             <constraint firstItem="JdY-wo-BnR" firstAttribute="leading" secondItem="1Jb-eU-BAb" secondAttribute="leading" id="Dwj-t0-71r"/>
+                                            <constraint firstAttribute="bottom" secondItem="Mr6-35-J8I" secondAttribute="bottom" id="LjC-wX-f90"/>
                                             <constraint firstAttribute="trailing" secondItem="nJG-Uz-g3b" secondAttribute="trailing" constant="54" id="NIp-cn-he7"/>
                                             <constraint firstItem="KGE-Gg-hTO" firstAttribute="top" secondItem="nMx-o2-k3S" secondAttribute="bottom" constant="8" id="Plc-PU-GVa"/>
                                             <constraint firstItem="GD7-tc-Fbd" firstAttribute="leading" secondItem="1Jb-eU-BAb" secondAttribute="leading" constant="73" id="QC9-ye-Oa8"/>
@@ -489,6 +509,7 @@
                                             <constraint firstItem="nJG-Uz-g3b" firstAttribute="leading" secondItem="1Jb-eU-BAb" secondAttribute="leading" constant="73" id="UBQ-uZ-HAl"/>
                                             <constraint firstItem="9uf-EG-NSR" firstAttribute="top" secondItem="nyq-Om-L85" secondAttribute="bottom" constant="8" id="UG6-dh-gGH"/>
                                             <constraint firstAttribute="trailing" secondItem="JdY-wo-BnR" secondAttribute="trailing" id="WKO-Ws-Ben"/>
+                                            <constraint firstItem="Mr6-35-J8I" firstAttribute="top" secondItem="1Jb-eU-BAb" secondAttribute="top" id="XrR-Sq-B0L"/>
                                             <constraint firstItem="8ae-hM-tXB" firstAttribute="top" secondItem="JdY-wo-BnR" secondAttribute="bottom" constant="8" id="YQn-ps-SeH"/>
                                             <constraint firstItem="nMx-o2-k3S" firstAttribute="top" secondItem="tYP-sg-eHA" secondAttribute="bottom" constant="27" id="aRF-q5-wE3"/>
                                             <constraint firstItem="dXR-Bk-2F5" firstAttribute="leading" secondItem="1Jb-eU-BAb" secondAttribute="leading" constant="145" id="avm-w9-TBd"/>
@@ -535,13 +556,30 @@
                     <connections>
                         <outlet property="cramDescription" destination="tYP-sg-eHA" id="W5f-Tf-54c"/>
                         <outlet property="endTime" destination="JdY-wo-BnR" id="x7h-uv-mb1"/>
+                        <outlet property="locationPicker" destination="KGE-Gg-hTO" id="fd0-YJ-UbL"/>
                         <outlet property="maxAttendees" destination="nJG-Uz-g3b" id="wAD-eY-McJ"/>
+                        <outlet property="noLocationsLabel" destination="zQi-ch-cbT" id="yth-aB-Ip9"/>
                         <outlet property="startTime" destination="nyq-Om-L85" id="wsJ-cu-vxy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rfF-mz-Be9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="100" y="1776.6116941529237"/>
+        </scene>
+        <!--Add Location View Controller-->
+        <scene sceneID="YBm-Ia-14r">
+            <objects>
+                <viewController id="IsD-ny-1Mo" customClass="AddLocationViewController" customModule="StudyBuddy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0kE-rJ-D80">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="YSW-Aw-jKo"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ew8-Ez-pji" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="916" y="2507"/>
         </scene>
         <!--joinCramViewController-->
         <scene sceneID="GgD-xY-BUj">

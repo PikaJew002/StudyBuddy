@@ -12,6 +12,7 @@
 		3F31C59B20801EA2001633AE /* filterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F31C59A20801EA2001633AE /* filterViewController.swift */; };
 		3F31C59D20801EB0001633AE /* cramCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F31C59C20801EB0001633AE /* cramCreateViewController.swift */; };
 		3F31C59F20801ED5001633AE /* joinCramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F31C59E20801ED4001633AE /* joinCramViewController.swift */; };
+		3F8C06EC2097B5120017879B /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8C06EB2097B5120017879B /* AddLocationViewController.swift */; };
 		3F8D5577207D7FE500B9FB76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D5576207D7FE500B9FB76 /* AppDelegate.swift */; };
 		3F8D5579207D7FE600B9FB76 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D5578207D7FE600B9FB76 /* ViewController.swift */; };
 		3F8D557C207D7FE600B9FB76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F8D557A207D7FE600B9FB76 /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 		3F31C59A20801EA2001633AE /* filterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterViewController.swift; sourceTree = "<group>"; };
 		3F31C59C20801EB0001633AE /* cramCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cramCreateViewController.swift; sourceTree = "<group>"; };
 		3F31C59E20801ED4001633AE /* joinCramViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = joinCramViewController.swift; sourceTree = "<group>"; };
+		3F8C06EB2097B5120017879B /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		3F8D5573207D7FE500B9FB76 /* StudyBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F8D5576207D7FE500B9FB76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F8D5578207D7FE600B9FB76 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				3F31C59C20801EB0001633AE /* cramCreateViewController.swift */,
 				3F31C59E20801ED4001633AE /* joinCramViewController.swift */,
 				3F8D557A207D7FE600B9FB76 /* Main.storyboard */,
+				3F8C06EB2097B5120017879B /* AddLocationViewController.swift */,
 				3F8D557D207D7FE600B9FB76 /* Assets.xcassets */,
 				3F8D557F207D7FE600B9FB76 /* LaunchScreen.storyboard */,
 				3F8D5582207D7FE600B9FB76 /* Info.plist */,
@@ -154,6 +157,7 @@
 				3F31C59B20801EA2001633AE /* filterViewController.swift in Sources */,
 				3F8D5579207D7FE600B9FB76 /* ViewController.swift in Sources */,
 				3F8D5577207D7FE500B9FB76 /* AppDelegate.swift in Sources */,
+				3F8C06EC2097B5120017879B /* AddLocationViewController.swift in Sources */,
 				3F31C59F20801ED5001633AE /* joinCramViewController.swift in Sources */,
 				3F31C5972080138E001633AE /* registrationViewController.swift in Sources */,
 				3F31C59920801AD7001633AE /* mapViewController.swift in Sources */,
