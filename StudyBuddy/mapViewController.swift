@@ -10,22 +10,6 @@ import UIKit
 import MapKit
 import CoreLocation
 
-struct CramJam: Codable {
-    var host: String
-    var start_time: String
-    var end_time: String
-    var subject: String
-    var max_peeps: Int
-    var description: String
-    var location: String
-}
-
-struct Location: Codable {
-    var name: String
-    var lat: Decimal
-    var lon: Decimal
-}
-
 class mapViewController: UIViewController, CLLocationManagerDelegate{
     let locManager = CLLocationManager()
     
@@ -51,45 +35,18 @@ class mapViewController: UIViewController, CLLocationManagerDelegate{
         centerMapOnLocation(location: curLocation, regionRadius: 500)
     }
     
-    func getData(table: String, condition: String, completion: @escaping (Bool)->()) {
-        let id = "21232f297a57a5a743894a0e4a801fc3"
-        var urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=select&table=\(table)"
-        if !condition.isEmpty {
-            urlStr += "&condition=\(condition)"
-        }
-        if let url = URL(string: urlStr) {
-            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-                do {
-                    let decoder = JSONDecoder()
-                    if data != nil {
-                        self.cramJams = try decoder.decode([CramJam].self, from: data!)
-                        completion(true)
-                    } else {
-                        completion(false)
-                    }
-                } catch {
-                    completion(false)
-                }
-            }).resume()
-        } else {
-            completion(false)
-        }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        getData(table: "cram_jam", condition: "") { isValid in
+        DataController.getData(table: "cram_jam", condition: "") { data in
             DispatchQueue.main.async {
-                if isValid {
-                    // do something with cram jams, like update map
-                    // this prints out the description of all cramjams for testing purposes
-                    for i in 0 ... self.cramJams.count - 1 {
-                        print("Description: "+self.cramJams[i].description)
+                do {
+                    let decoder = JSONDecoder()
+                    self.cramJams = try decoder.decode([CramJam].self, from: data!)
+                } catch {
+                    if String(decoding: data!, as: UTF8.self) == "{}" {
+                        self.cramJams = []
                     }
-                    
-                } else {
-                    // give an error
                 }
             }
         }

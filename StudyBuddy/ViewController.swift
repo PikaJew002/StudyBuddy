@@ -8,14 +8,6 @@
 
 import UIKit
 
-struct User: Codable {
-    var email: String = ""
-    var first_name: String = ""
-    var last_name: String = ""
-    var password: String = ""
-    var username: String = ""
-}
-
 class ViewController: UIViewController {
     
     @IBOutlet weak var username: UITextField!
@@ -27,10 +19,11 @@ class ViewController: UIViewController {
     
     @IBAction func login(_ sender: UIButton) {
         if !username.text!.isEmpty && !password.text!.isEmpty {
-            // select * from user where email = $email
-            getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { isValid in
+            DataController.getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { (data) in
                 DispatchQueue.main.async {
-                    if isValid {
+                    do {
+                        let decoder = JSONDecoder()
+                        self.user = try decoder.decode(User.self, from: data!)
                         if self.password.text == self.user.password {
                             self.username.text = ""
                             self.password.text = ""
@@ -41,11 +34,15 @@ class ViewController: UIViewController {
                             self.password.text = ""
                             self.errorMessageLabel.text = "The password for that user is incorrect!"
                         }
-                    } else {
-                        self.user = User()
-                        self.password.text = ""
-                        self.username.text = ""
-                        self.errorMessageLabel.text = "That user does not exist!"
+                    } catch {
+                        if String(decoding: data!, as: UTF8.self) == "{}" {
+                            self.user = User()
+                            self.password.text = ""
+                            self.username.text = ""
+                            self.errorMessageLabel.text = "That user does not exist!"
+                        } else {
+                            print("error with the return type!")
+                        }
                     }
                 }
             }
@@ -55,37 +52,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func toRegistrationView(_ sender: UIButton) {
-        user = User(email: "", first_name: "", last_name: "", password: "", username: "")
+        user = User()
         performSegue(withIdentifier: "toRegistrationView", sender: self)
-    }
-    
-    func getData(table: String, condition: String, completion: @escaping (Bool)->()) {
-        let id = "21232f297a57a5a743894a0e4a801fc3"
-        var urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=select&table=\(table)"
-        if !condition.isEmpty {
-            urlStr += "&condition=\(condition)"
-        }
-        if let url = URL(string: urlStr) {
-            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-                do {
-                    let decoder = JSONDecoder()
-                    if data != nil {
-                        self.user = try decoder.decode(User.self, from: data!)
-                        if !self.user.email.isEmpty {
-                            completion(true)
-                        } else {
-                            completion(false)
-                        }
-                    } else {
-                        completion(false)
-                    }
-                } catch {
-                    completion(false)
-                }
-            }).resume()
-        } else {
-            completion(false)
-        }
     }
     
     override func viewDidLoad() {
