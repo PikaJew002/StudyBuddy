@@ -27,9 +27,9 @@ struct CramJam: Codable {
 }
 
 struct Location: Codable {
-    var name: String
-    var lat: Decimal
-    var lon: Decimal
+    var name: String = ""
+    var lat: Decimal = 0.0
+    var lon: Decimal = 0.0
 }
 
 class DataController {

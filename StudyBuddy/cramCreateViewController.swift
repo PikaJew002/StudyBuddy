@@ -18,12 +18,24 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var maxAttendees: UITextField!
     
     var locations: [Location] = []
+    var location: Location = Location()
     
     // Need to connect picker view, and add stuff to it later.
+    // ^ I did that - AE
     @IBAction func backToMapView(_ sender: UIButton) {
         //let dateFormatter = DateFormatter()
         //dateFormatter.dateFormat = "yyyyMMddHHmmss"
         //print(dateFormatter.string(from: startTime.date))
+        
+        // validate input
+        if !cramDescription.text.isEmpty {
+            
+        } else {
+            
+        }
+        
+        // put data
+        
         dismiss(animated: true, completion: nil)
     }
     
@@ -39,17 +51,30 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
         return locations.count
     }
     
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return locations[row].name
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        location = locations[row]
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // get users location data for computing distances
+        
+        // get all saved locations from database
         DataController.getData(table: "location", condition: "") { (data) in
             DispatchQueue.main.async {
                 do {
                     let decoder = JSONDecoder()
                     self.locations = try decoder.decode([Location].self, from: data!)
+                    self.location = self.locations[0]
                 } catch {
                     if String(decoding: data!, as: UTF8.self) == "{}" {
                         self.locations = []
+                        self.location = Location()
                         self.locationPicker.isHidden = true
                         self.noLocationsLabel.isHidden = false
                     }

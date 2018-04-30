@@ -8,23 +8,16 @@
 
 import UIKit
 
-class AddLocationViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class AddLocationViewController: UIViewController {
     
     var locations: [Location] = []
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return locations.count
+    @IBAction func cancel(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 2
-    }
-    
-    @IBAction func getLocation(_ sender: UIButton) {
-        // get device lat and lon
-        // with defined radius of what will be considered the same building,
-        // create conditions to pass as "condition" in getData()
-        // remmeber to code spaces as %20 and double quotes as %22
+    @IBAction func addLocation(_ sender: UIButton) {
+        
     }
     
     override func viewDidLoad() {
