@@ -16,6 +16,8 @@ class mapViewController: UIViewController, CLLocationManagerDelegate{
     var condition = ""
     var user: User = User()
     
+    var switches = [false, false, false] //0-subject, 1-time, 2-amount
+    
     var cramJams: [CramJam] = []
     
     //map view that displays current CramJams and their locations

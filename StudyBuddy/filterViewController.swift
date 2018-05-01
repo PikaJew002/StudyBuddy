@@ -20,6 +20,7 @@ class filterViewController: UIViewController {
     @IBOutlet weak var SubjectTextField: UITextField!
     @IBOutlet weak var timePicker: UIDatePicker!
     
+    
     func filterString() -> String{
         var condition = ""
         if (subjectSwitch.isOn){  //user wants to filter by subject
@@ -57,11 +58,23 @@ class filterViewController: UIViewController {
     }
     
     @IBAction func backToMapView(_ sender: UIButton) {
-        (presentingViewController as! mapViewController).condition = filterString()
+        let mc = (presentingViewController as! mapViewController)
+        mc.condition = filterString()
+        //save filters
+        mc.switches[0] = subjectSwitch.isOn
+        mc.switches[1] = timeSwitch.isOn
+        mc.switches[2] = amountSwitch.isOn
         
         dismiss(animated: true, completion: nil)
     }
-        
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        let mc = (presentingViewController as! mapViewController)
+        subjectSwitch.isOn = mc.switches[0]
+        timeSwitch.isOn = mc.switches[1]
+        amountSwitch.isOn = mc.switches[2]
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
