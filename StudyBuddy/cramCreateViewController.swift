@@ -61,7 +61,8 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        let date = Calendar.current.date(byAdding: Calendar.Component.hour, value: 1, to: Date(), wrappingComponents: true)
+        endTime.setDate(date!, animated: false)
         // get users location data for computing distances
         
         // get all saved locations from database
