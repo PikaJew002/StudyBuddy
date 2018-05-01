@@ -17,7 +17,9 @@ class AddLocationViewController: UIViewController {
     }
     
     @IBAction func addLocation(_ sender: UIButton) {
-        
+        let location = ((presentingViewController as! cramCreateViewController).presentingViewController as! mapViewController).locManager.location
+        let lat = Decimal((location!.coordinate.latitude))
+        let lon = Decimal((location!.coordinate.longitude))
     }
     
     override func viewDidLoad() {
