@@ -24,7 +24,7 @@ class mapViewController: UIViewController, CLLocationManagerDelegate{
     func getLocations(){
         for cj in cramJams{
             var cjLocation = Location()
-            DataController.getData(table: "location", condition: "name = \(cj.location)", completion: { (data) in
+            DataController.getData(table: "location", many: false, condition: "name = \(cj.location)", completion: { (data) in
                  DispatchQueue.main.async {
                     do{
                         let decoder = JSONDecoder()
@@ -62,7 +62,7 @@ class mapViewController: UIViewController, CLLocationManagerDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        DataController.getData(table: "cram_jam", condition: condition) { data in
+        DataController.getData(table: "cram_jam", many: true, condition: condition) { data in
             DispatchQueue.main.async {
                 do {
                     let decoder = JSONDecoder()
