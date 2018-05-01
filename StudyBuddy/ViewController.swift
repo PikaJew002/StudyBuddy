@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     @IBAction func login(_ sender: UIButton) {
         if !username.text!.isEmpty && !password.text!.isEmpty {
-            DataController.getData(table: "user", condition: "email%20=%20%22\(username.text!)%22") { (data) in
+            DataController.getData(table: "user", many: false, condition: "email%20=%20%22\(username.text!)%22") { (data) in
                 DispatchQueue.main.async {
                     do {
                         let decoder = JSONDecoder()
