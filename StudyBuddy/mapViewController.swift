@@ -44,7 +44,7 @@ class mapViewController: UIViewController, CLLocationManagerDelegate{
         cramJamMap.setRegion(coordinateRegion, animated: true)
     }
     
-    @IBAction func backToLogin(_ sender: UIButton) {
+    @IBAction func backToLogin(_ sender: Any) {
         user = User()
         dismiss(animated: true, completion: nil)
     }
@@ -54,7 +54,7 @@ class mapViewController: UIViewController, CLLocationManagerDelegate{
         centerMapOnLocation(location: curLocation, regionRadius: 500)
     }
     
-    @IBAction func toCreateCramJam(_ sender: UIButton) {
+    @IBAction func toCreateCramJam(_ sender: Any) {
         
         performSegue(withIdentifier: "toCramCreate", sender: sender)
     }

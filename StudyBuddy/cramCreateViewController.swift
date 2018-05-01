@@ -64,7 +64,7 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
         let date = Calendar.current.date(byAdding: Calendar.Component.hour, value: 1, to: Date(), wrappingComponents: true)
         endTime.setDate(date!, animated: false)
         // get users location data for computing distances
-        updateLocations()
+        //updateLocations()
         // get all saved locations from database
         DataController.getData(table: "location", many: true, condition: "") { (data) in
             DispatchQueue.main.async {

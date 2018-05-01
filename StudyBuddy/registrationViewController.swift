@@ -42,6 +42,11 @@ class registrationViewController: UIViewController {
         }
     }
     
+    @IBAction func cancel(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

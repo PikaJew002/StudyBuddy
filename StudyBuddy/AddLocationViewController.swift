@@ -26,7 +26,7 @@ class AddLocationViewController: UIViewController {
         DataController.putData(table: "location", values: [locationName.text!.replacingOccurrences(of: " ", with: "%20"), "\(lat)", "\(lon)"], columns: []) { (didInsert) in
             DispatchQueue.main.async {
                 if didInsert {
-                    (self.presentingViewController as! cramCreateViewController).updateLocations()
+                    //(self.presentingViewController as! cramCreateViewController).updateLocations()
                     self.dismiss(animated: true, completion: nil)
                 } else {
                     // throw error message
