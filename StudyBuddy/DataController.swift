@@ -49,14 +49,22 @@ class DataController {
         }
     }
     
-    static func putData(table: String, values: [String], completion: @escaping (Bool)->()) {
+    static func putData(table: String, values: [String], columns: [String], completion: @escaping (Bool)->()) {
         let id = "21232f297a57a5a743894a0e4a801fc3"
         var urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=insert&table=\(table)&values="
         for i in 0 ... values.count - 2 {
             urlStr += "%22\(values[i])%22%2C%20"
         }
         urlStr += "%22\(values[values.count - 1])%22"
-        print(urlStr)
+        if columns.count > 1 {
+            urlStr += "&columns="
+            for i in 0 ... columns.count - 2 {
+                urlStr += "\(columns[i])%2C%20"
+            }
+            urlStr += "\(columns[columns.count - 1])"
+        } else if columns.count > 0 {
+            urlStr += "\(columns[columns.count - 1])"
+        }
         if let url = URL(string: urlStr) {
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                 let dataStr = String(decoding: data!, as: UTF8.self)

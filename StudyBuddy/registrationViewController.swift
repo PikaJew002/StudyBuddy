@@ -20,7 +20,7 @@ class registrationViewController: UIViewController {
     
     @IBAction func backToLogin(_ sender: UIButton) {
         if !firstName.text!.isEmpty && !lastName.text!.isEmpty && !email.text!.isEmpty && !username.text!.isEmpty && !password.text!.isEmpty {
-            DataController.putData(table: "user", values: [email.text!, firstName.text!, lastName.text!, password.text!, username.text!], completion: { (didInsert) in
+            DataController.putData(table: "user", values: [email.text!, firstName.text!, lastName.text!, password.text!, username.text!], columns: [], completion: { (didInsert) in
                 DispatchQueue.main.async {
                     if didInsert {
                         self.email.text = ""
