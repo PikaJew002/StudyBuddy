@@ -34,9 +34,13 @@ struct Location: Codable {
 }
 
 class DataController {
-    static func getData(table: String, condition: String, completion: @escaping (Data?)->()) {
+    static func getData(table: String, many: Bool, condition: String, completion: @escaping (Data?)->()) {
         let id = "21232f297a57a5a743894a0e4a801fc3"
-        var urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=select&table=\(table)"
+        var urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=select"
+        if !many {
+            urlStr += "_one"
+        }
+        urlStr += "&table=\(table)"
         if !condition.isEmpty {
             urlStr += "&condition=\(condition)"
         }
