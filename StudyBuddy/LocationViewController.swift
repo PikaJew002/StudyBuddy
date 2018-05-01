@@ -50,7 +50,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toLocationView" {
             let view = sender as! MKMarkerAnnotationView
             cramJams = (presentingViewController as! mapViewController).cramJams
@@ -63,7 +63,7 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
                 }
             }
         }
-    }
+    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()

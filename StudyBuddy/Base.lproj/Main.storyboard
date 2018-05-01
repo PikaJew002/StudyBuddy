@@ -294,7 +294,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ue-lK-8gM">
                                 <rect key="frame" x="123" y="605" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Confirm Changes"/>
+                                <state key="normal" title="Confirm Changes">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="backToMapView:" destination="kwz-GR-MkS" eventType="touchUpInside" id="eay-Nx-KW6"/>
                                     <action selector="backToMapView:" destination="FFm-a1-C4s" eventType="touchUpInside" id="hW0-Ef-qEM"/>
@@ -357,7 +359,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="52q-Ug-cmf"/>
                     </view>
                     <connections>
@@ -397,6 +399,15 @@
                                                     <action selector="dismissKeyboard:" destination="pSp-yv-pZi" eventType="touchUpInside" id="8eF-9D-336"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2g-Ea-2re">
+                                                <rect key="frame" x="8" y="894" width="359" height="21"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="jl0-cv-Wtq"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(ex. CMS, CSC, BIO)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jkg-Hi-2Ag">
                                                 <rect key="frame" x="211" y="28" width="156" height="21"/>
                                                 <constraints>
@@ -406,16 +417,6 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mcq-kO-eBF">
-                                                <rect key="frame" x="129" y="938" width="116" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="nW6-b2-uTM"/>
-                                                </constraints>
-                                                <state key="normal" title="Create CramJam"/>
-                                                <connections>
-                                                    <action selector="backToMapView:" destination="pSp-yv-pZi" eventType="touchUpInside" id="C6W-YY-QUw"/>
-                                                </connections>
-                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXR-Bk-2F5">
                                                 <rect key="frame" x="145" y="71" width="85" height="21"/>
                                                 <constraints>
@@ -534,22 +535,27 @@
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rij-2T-G7k">
                                                 <rect key="frame" x="119" y="776" width="137" height="30"/>
-                                                <state key="normal" title="Create new location"/>
+                                                <state key="normal" title="Create new location">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
                                                 <connections>
                                                     <segue destination="IsD-ny-1Mo" kind="presentation" id="M7i-kf-R0E"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2g-Ea-2re">
-                                                <rect key="frame" x="8" y="894" width="359" height="21"/>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mcq-kO-eBF">
+                                                <rect key="frame" x="139" y="935" width="116" height="30"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="21" id="jl0-cv-Wtq"/>
+                                                    <constraint firstAttribute="height" constant="30" id="nW6-b2-uTM"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                                <state key="normal" title="Create CramJam">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="backToMapView:" destination="pSp-yv-pZi" eventType="touchUpInside" id="C6W-YY-QUw"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="nJG-Uz-g3b" firstAttribute="top" secondItem="GD7-tc-Fbd" secondAttribute="bottom" constant="21" id="22E-5b-6an"/>
                                             <constraint firstItem="KGE-Gg-hTO" firstAttribute="leading" secondItem="1Jb-eU-BAb" secondAttribute="leading" id="4Q6-I3-8bc"/>
@@ -678,7 +684,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wD-Vd-C6A">
                                 <rect key="frame" x="16" y="133" width="90" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add Location"/>
+                                <state key="normal" title="Add Location">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
                                 <connections>
                                     <action selector="addLocation:" destination="IsD-ny-1Mo" eventType="touchUpInside" id="oI2-xo-sQm"/>
                                 </connections>
@@ -686,13 +694,15 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROY-GS-dg8">
                                 <rect key="frame" x="178" y="133" width="48" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Cancel"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
                                 <connections>
                                     <action selector="cancel:" destination="IsD-ny-1Mo" eventType="touchUpInside" id="nmS-cM-pUV"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="YSW-Aw-jKo"/>
                     </view>
                     <connections>
@@ -714,7 +724,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ffh-wU-eIT">
                                 <rect key="frame" x="164" y="551" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
                                 <connections>
                                     <action selector="backToMapView:" destination="Zru-YL-rXx" eventType="touchUpInside" id="UOe-ZE-4Nv"/>
                                 </connections>
@@ -762,7 +774,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="KYO-Bl-lWC"/>
                     </view>
                 </viewController>

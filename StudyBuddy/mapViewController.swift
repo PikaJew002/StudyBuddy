@@ -15,7 +15,11 @@ class mapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var condition = ""
     var user: User = User()
     
+    //to save the current filters
     var switches = [false, false, false] //0-subject, 1-time, 2-amount
+    var filters = ["", ""]  //0-subject, 1-amount <- holds value of filters
+    var timeFilter: Date?
+
     
     var cramJams: [CramJam] = []
     var locations: [Location] = []

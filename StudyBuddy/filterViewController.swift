@@ -63,10 +63,24 @@ class filterViewController: UIViewController {
     @IBAction func backToMapView(_ sender: UIButton) {
         let mc = (presentingViewController as! mapViewController)
         mc.condition = filterString()
+        print("HERE IT IS \(mc.condition)")
         //save filters
         mc.switches[0] = subjectSwitch.isOn
         mc.switches[1] = timeSwitch.isOn
         mc.switches[2] = amountSwitch.isOn
+        if (subjectSwitch.isOn){
+            if (SubjectTextField != nil){
+                mc.filters[0] = SubjectTextField.text!
+            }
+        }
+        if (timeSwitch.isOn){
+            mc.timeFilter = timePicker.date
+        }
+        if (amountSwitch.isOn){
+            if (amountTextField != nil){
+                mc.filters[1] = amountTextField.text!
+            }
+        }
         
         dismiss(animated: true, completion: nil)
     }
@@ -83,6 +97,15 @@ class filterViewController: UIViewController {
         SubjectTextField.isHidden = !mc.switches[0]
         amountLabel.isHidden = !mc.switches[2]
         amountTextField.isHidden = !mc.switches[2]
+        if (mc.switches[0]){    //subject filter is on
+            SubjectTextField.text = mc.filters[0]
+        }
+        if (mc.switches[1]){
+            timePicker.date = mc.timeFilter!
+        }
+        if (mc.switches[2]){
+            amountTextField.text = mc.filters[1]
+        }
     }
     
     override func viewDidLoad() {
