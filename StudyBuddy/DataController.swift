@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import MapKit
+import CoreLocation
 
 struct User: Codable {
     var email: String = ""
@@ -33,6 +35,17 @@ struct Location: Codable {
     var lon: Decimal = 0.0
 }
 
+class LocationAnnotation: NSObject, MKAnnotation {
+    var coordinate: CLLocationCoordinate2D
+    let title: String?
+    
+    init(location: Location) {
+        self.title = location.name
+        self.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees((location.lat as NSDecimalNumber).doubleValue), longitude: CLLocationDegrees((location.lon as NSDecimalNumber).doubleValue))
+        super.init()
+    }
+}
+
 class DataController {
     static func getData(table: String, many: Bool, condition: String, completion: @escaping (Data?)->()) {
         let id = "21232f297a57a5a743894a0e4a801fc3"
@@ -44,6 +57,9 @@ class DataController {
         if !condition.isEmpty {
             urlStr += "&condition=\(condition)"
         }
+        urlStr = urlStr.replacingOccurrences(of: " ", with: "%20")
+        urlStr = urlStr.replacingOccurrences(of: "\"", with: "%22")
+        urlStr = urlStr.replacingOccurrences(of: ",", with: "%2C")
         if let url = URL(string: urlStr) {
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                 completion(data)
@@ -57,19 +73,22 @@ class DataController {
         let id = "21232f297a57a5a743894a0e4a801fc3"
         var urlStr = "http://baruchhaba.org/StudyBuddy/query.php?id=\(id)&type=insert&table=\(table)&values="
         for i in 0 ... values.count - 2 {
-            urlStr += "%22\(values[i])%22%2C%20"
+            urlStr += "\"\(values[i])\", "
         }
-        urlStr += "%22\(values[values.count - 1])%22"
+        urlStr += "\"\(values[values.count - 1])\""
         if columns.count > 1 {
             urlStr += "&columns="
             for i in 0 ... columns.count - 2 {
-                urlStr += "\(columns[i])%2C%20"
+                urlStr += "\(columns[i]), "
             }
             urlStr += "\(columns[columns.count - 1])"
         } else if columns.count > 0 {
             urlStr += "\(columns[columns.count - 1])"
         }
-        print(urlStr)
+        urlStr = urlStr.replacingOccurrences(of: " ", with: "%20")
+        urlStr = urlStr.replacingOccurrences(of: "\"", with: "%22")
+        urlStr = urlStr.replacingOccurrences(of: ",", with: "%2C")
+        print("URL: "+urlStr)
         if let url = URL(string: urlStr) {
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                 let dataStr = String(decoding: data!, as: UTF8.self)

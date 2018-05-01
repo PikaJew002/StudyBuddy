@@ -10,33 +10,61 @@ import UIKit
 
 class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBOutlet weak var subject: UITextField!
     @IBOutlet weak var startTime: UIDatePicker!
     @IBOutlet weak var endTime: UIDatePicker!
     @IBOutlet weak var cramDescription: UITextView!
     @IBOutlet weak var locationPicker: UIPickerView!
     @IBOutlet weak var noLocationsLabel: UILabel!
     @IBOutlet weak var maxAttendees: UITextField!
+    @IBOutlet weak var errorMessageLabel: UILabel!
     
     var locations: [Location] = []
     var location: Location = Location()
+    var user: User = User()
     
     // Need to connect picker view, and add stuff to it later.
     // ^ I did that - AE
     @IBAction func backToMapView(_ sender: UIButton) {
-        //let dateFormatter = DateFormatter()
-        //dateFormatter.dateFormat = "yyyyMMddHHmmss"
         //print(dateFormatter.string(from: startTime.date))
-        
+        sender.isEnabled = false
         // validate input
-        if !cramDescription.text.isEmpty {
-            
+        // none of the fields are empty
+        if !cramDescription.text!.isEmpty && !subject.text!.isEmpty && !maxAttendees.text!.isEmpty {
+            // the end datetime is not before the start
+            if startTime.date < endTime.date {
+                if Int(maxAttendees.text!) != nil {
+                    if Int(maxAttendees.text!)! > 0 {
+                        let df = DateFormatter()
+                        df.dateFormat = "yyyyMMddHHmmss"
+                        DataController.putData(table: "cram_jam", values: [user.email, df.string(from: startTime.date), df.string(from: endTime.date), subject.text!, maxAttendees.text!, cramDescription.text!, location.name], columns: ["host", "start_time", "end_time", "subject", "max_peeps", "description", "location"], completion: { (didInsert) in
+                            DispatchQueue.main.async {
+                                if didInsert {
+                                    sender.isEnabled = true
+                                    self.errorMessageLabel.text = ""
+                                    self.dismiss(animated: true, completion: nil)
+                                } else {
+                                    sender.isEnabled = true
+                                    self.errorMessageLabel.text = "Database error!"
+                                }
+                            }
+                        })
+                    } else {
+                        sender.isEnabled = true
+                        errorMessageLabel.text = "Please enter an integer greater than 0 for \"Max Number of Attendees\""
+                    }
+                } else {
+                    sender.isEnabled = true
+                    errorMessageLabel.text = "Please enter a valid integer for \"Max Number of Attendees\""
+                }
+            } else {
+                sender.isEnabled = true
+                errorMessageLabel.text = "Please make sure the end date and time is after the start date and time!"
+            }
         } else {
-            
+            sender.isEnabled = true
+            errorMessageLabel.text = "Please make sure all fields are fillled!"
         }
-        
-        // put data
-        
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func dismissKeyboard(_ sender: Any) {
@@ -63,6 +91,7 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
         super.viewWillAppear(animated)
         let date = Calendar.current.date(byAdding: Calendar.Component.hour, value: 1, to: Date(), wrappingComponents: true)
         endTime.setDate(date!, animated: false)
+        user = (presentingViewController as! mapViewController).user
         // get users location data for computing distances
         //updateLocations()
         // get all saved locations from database
@@ -74,25 +103,16 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
                     self.location = self.locations[0]
                     self.locationPicker.isHidden = false
                     self.noLocationsLabel.isHidden = true
-                    if self.locations.count > 0 {
-                        for i in 0 ... self.locations.count - 1 {
-                            print("Name: \(self.locations[i].name)")
-                        }
-                    } else {
-                        print("No locations loaded")
-                    }
                     self.locationPicker.reloadAllComponents()
-                } catch  let errorr {
+                } catch  let error {
                     if String(decoding: data!, as: UTF8.self) == "{}" {
-                        print("errorrrrr")
                         self.locations = []
                         self.location = Location()
                         self.locationPicker.isHidden = true
                         self.noLocationsLabel.isHidden = false
                     } else {
-                        print("nope")
-                        print(String(decoding: data!, as: UTF8.self))
-                        print(errorr)
+                        print("JSON: "+String(decoding: data!, as: UTF8.self))
+                        print("Swfit error: "+error.localizedDescription)
                     }
                 }
             }

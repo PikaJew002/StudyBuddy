@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     @IBAction func login(_ sender: UIButton) {
         if !username.text!.isEmpty && !password.text!.isEmpty {
-            DataController.getData(table: "user", many: false, condition: "email%20=%20%22\(username.text!)%22") { (data) in
+            DataController.getData(table: "user", many: false, condition: "email = \"\(username.text!)\"") { (data) in
                 DispatchQueue.main.async {
                     do {
                         let decoder = JSONDecoder()
@@ -34,14 +34,15 @@ class ViewController: UIViewController {
                             self.password.text = ""
                             self.errorMessageLabel.text = "The password for that user is incorrect!"
                         }
-                    } catch {
+                    } catch let error {
+                        print("user error: "+error.localizedDescription)
                         if String(decoding: data!, as: UTF8.self) == "{}" {
                             self.user = User()
                             self.password.text = ""
                             self.username.text = ""
                             self.errorMessageLabel.text = "That user does not exist!"
                         } else {
-                            print("error with the return type!")
+                            print(String(decoding: data!, as: UTF8.self))
                         }
                     }
                 }
