@@ -54,6 +54,11 @@ class mapViewController: UIViewController, CLLocationManagerDelegate{
         centerMapOnLocation(location: curLocation, regionRadius: 500)
     }
     
+    @IBAction func toCreateCramJam(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: "toCramCreate", sender: sender)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

@@ -12,6 +12,8 @@ class AddLocationViewController: UIViewController {
     
     var locations: [Location] = []
     
+    @IBOutlet weak var locationName: UITextField!
+    
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
@@ -20,6 +22,18 @@ class AddLocationViewController: UIViewController {
         let location = ((presentingViewController as! cramCreateViewController).presentingViewController as! mapViewController).locManager.location
         let lat = Decimal((location!.coordinate.latitude))
         let lon = Decimal((location!.coordinate.longitude))
+        print("Name: \(locationName.text!), Lat: \(lat), Lon: \(lon)")
+        DataController.putData(table: "location", values: [locationName.text!.replacingOccurrences(of: " ", with: "%20"), "\(lat)", "\(lon)"], columns: []) { (didInsert) in
+            DispatchQueue.main.async {
+                if didInsert {
+                    (self.presentingViewController as! cramCreateViewController).updateLocations()
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    // throw error message
+                    print("error!")
+                }
+            }
+        }
     }
     
     override func viewDidLoad() {

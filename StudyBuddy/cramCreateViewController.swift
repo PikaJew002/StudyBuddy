@@ -64,7 +64,7 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
         let date = Calendar.current.date(byAdding: Calendar.Component.hour, value: 1, to: Date(), wrappingComponents: true)
         endTime.setDate(date!, animated: false)
         // get users location data for computing distances
-        
+        updateLocations()
         // get all saved locations from database
         DataController.getData(table: "location", condition: "") { (data) in
             DispatchQueue.main.async {
@@ -72,8 +72,53 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
                     let decoder = JSONDecoder()
                     self.locations = try decoder.decode([Location].self, from: data!)
                     self.location = self.locations[0]
+                    self.locationPicker.isHidden = false
+                    self.noLocationsLabel.isHidden = true
+                    if self.locations.count > 0 {
+                        for i in 0 ... self.locations.count - 1 {
+                            print("Name: \(self.locations[i].name)")
+                        }
+                    } else {
+                        print("No locations loaded")
+                    }
+                    self.locationPicker.reloadAllComponents()
                 } catch {
                     if String(decoding: data!, as: UTF8.self) == "{}" {
+                        print("errorrrrr")
+                        self.locations = []
+                        self.location = Location()
+                        self.locationPicker.isHidden = true
+                        self.noLocationsLabel.isHidden = false
+                    } else {
+                        print("nope")
+                        print(String(decoding: data!, as: UTF8.self))
+                    }
+                }
+            }
+        }
+    }
+    
+    func updateLocations() {
+        // get all saved locations from database
+        DataController.getData(table: "location", condition: "") { (data) in
+            DispatchQueue.main.async {
+                do {
+                    let decoder = JSONDecoder()
+                    self.locations = try decoder.decode([Location].self, from: data!)
+                    self.location = self.locations[0]
+                    self.locationPicker.isHidden = false
+                    self.noLocationsLabel.isHidden = true
+                    if self.locations.count > 0 {
+                        for i in 0 ... self.locations.count - 1 {
+                            print("Name: \(self.locations[i].name)")
+                        }
+                    } else {
+                        print("No locations loaded")
+                    }
+                    self.locationPicker.reloadAllComponents()
+                } catch {
+                    if String(decoding: data!, as: UTF8.self) == "{}" {
+                        print("errorrrrr")
                         self.locations = []
                         self.location = Location()
                         self.locationPicker.isHidden = true
@@ -82,7 +127,6 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
                 }
             }
         }
-        
     }
     
     override func viewDidLoad() {

@@ -65,6 +65,7 @@ class DataController {
         } else if columns.count > 0 {
             urlStr += "\(columns[columns.count - 1])"
         }
+        print(urlStr)
         if let url = URL(string: urlStr) {
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                 let dataStr = String(decoding: data!, as: UTF8.self)

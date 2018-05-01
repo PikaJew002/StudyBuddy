@@ -614,6 +614,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="YSW-Aw-jKo"/>
                     </view>
+                    <connections>
+                        <outlet property="locationName" destination="iSf-ic-eDM" id="12D-EL-8VO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ew8-Ez-pji" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -703,7 +706,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Create a Cram Jam"/>
                                 <connections>
-                                    <segue destination="pSp-yv-pZi" kind="presentation" id="nWb-kr-dre"/>
+                                    <action selector="toCreateCramJam:" destination="7tf-kG-319" eventType="touchUpInside" id="bKC-sH-Wlx"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Active Filters: " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uCu-Oj-eP0">
@@ -743,6 +746,7 @@
                     </view>
                     <connections>
                         <outlet property="cramJamMap" destination="f9a-Jx-LGW" id="S0s-p8-Gfv"/>
+                        <segue destination="pSp-yv-pZi" kind="presentation" identifier="toCramCreate" id="6A4-mX-N7c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mOd-O2-jzH" userLabel="First Responder" sceneMemberID="firstResponder"/>
