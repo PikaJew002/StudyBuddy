@@ -51,6 +51,9 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func dismissKeyboard(_ sender: Any) {
+        self.view.endEditing(true)
+    }
     @IBAction func toRegistrationView(_ sender: UIButton) {
         user = User()
         performSegue(withIdentifier: "toRegistrationView", sender: self)

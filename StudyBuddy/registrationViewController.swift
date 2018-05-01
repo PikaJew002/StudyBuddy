@@ -46,6 +46,9 @@ class registrationViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func dismissKeyboard(_ sender: Any) {
+        self.view.endEditing(true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

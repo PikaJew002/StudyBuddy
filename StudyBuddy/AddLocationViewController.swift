@@ -18,6 +18,10 @@ class AddLocationViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func dismissKeyboard(_ sender: Any) {
+        self.view.endEditing(true)
+    }
+    
     @IBAction func addLocation(_ sender: UIButton) {
         let location = ((presentingViewController as! cramCreateViewController).presentingViewController as! mapViewController).locManager.location
         let lat = Decimal((location!.coordinate.latitude))

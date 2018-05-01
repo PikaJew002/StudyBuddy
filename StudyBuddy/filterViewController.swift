@@ -41,6 +41,9 @@ class filterViewController: UIViewController {
         return condition
     }
     
+    @IBAction func dismissKeyboard(_ sender: Any) {
+        self.view.endEditing(true)
+    }
     
     @IBAction func showSubject(_ sender: UISwitch) {
         SubjectLabel.isHidden = !subjectSwitch.isOn
