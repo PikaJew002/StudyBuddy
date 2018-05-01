@@ -82,7 +82,7 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
                         print("No locations loaded")
                     }
                     self.locationPicker.reloadAllComponents()
-                } catch {
+                } catch  let errorr {
                     if String(decoding: data!, as: UTF8.self) == "{}" {
                         print("errorrrrr")
                         self.locations = []
@@ -92,6 +92,7 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
                     } else {
                         print("nope")
                         print(String(decoding: data!, as: UTF8.self))
+                        print(errorr)
                     }
                 }
             }
