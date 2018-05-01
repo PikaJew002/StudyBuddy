@@ -20,6 +20,27 @@ class filterViewController: UIViewController {
     @IBOutlet weak var SubjectTextField: UITextField!
     @IBOutlet weak var timePicker: UIDatePicker!
     
+    func filterString() -> String{
+        var condition = ""
+        if (subjectSwitch.isOn){  //user wants to filter by subject
+            if (SubjectTextField != nil){
+                    condition += "subject%20=%20%22\(SubjectTextField.text!)%22"
+                }
+            }
+        if (timeSwitch.isOn){
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddhhmmss"
+            condition += "cast(%22\(dateFormatter.string(from: timePicker.date))%22%20as%20date)%20between%20start_time%20and%20end_time"
+        }
+        if (amountSwitch.isOn){
+            if (amountTextField.text != nil){
+                condition += "max_peeps%20<=%20\(amountTextField.text!)"
+                }
+        }
+        return condition
+    }
+    
+    
     @IBAction func showSubject(_ sender: UISwitch) {
         SubjectLabel.isHidden = !subjectSwitch.isOn
         SubjectTextField.isHidden = !subjectSwitch.isOn
@@ -36,6 +57,8 @@ class filterViewController: UIViewController {
     }
     
     @IBAction func backToMapView(_ sender: UIButton) {
+        (presentingViewController as! mapViewController).condition = filterString()
+        
         dismiss(animated: true, completion: nil)
     }
         
