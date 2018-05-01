@@ -74,6 +74,12 @@ class filterViewController: UIViewController {
         subjectSwitch.isOn = mc.switches[0]
         timeSwitch.isOn = mc.switches[1]
         amountSwitch.isOn = mc.switches[2]
+        timeLabel.isHidden = !mc.switches[1]
+        timePicker.isHidden = !mc.switches[1]
+        SubjectLabel.isHidden = !mc.switches[0]
+        SubjectTextField.isHidden = !mc.switches[0]
+        amountLabel.isHidden = !mc.switches[2]
+        amountTextField.isHidden = !mc.switches[2]
     }
     
     override func viewDidLoad() {
