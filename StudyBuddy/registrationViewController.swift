@@ -17,7 +17,7 @@ class registrationViewController: UIViewController {
     @IBOutlet weak var password: UITextField!
     
     @IBOutlet weak var errorMessageLabel: UILabel!
-    
+    // this will send data into our database, and create the user.
     @IBAction func backToLogin(_ sender: UIButton) {
         if !firstName.text!.isEmpty && !lastName.text!.isEmpty && !email.text!.isEmpty && !username.text!.isEmpty && !password.text!.isEmpty {
             DataController.putData(table: "user", values: [email.text!, firstName.text!, lastName.text!, password.text!, username.text!], columns: [], completion: { (didInsert) in
@@ -41,11 +41,11 @@ class registrationViewController: UIViewController {
             errorMessageLabel.text = "You have empty fields!"
         }
     }
-    
+    //this just sends us back to the login.
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
+    //dismiss the keyboard.
     @IBAction func dismissKeyboard(_ sender: Any) {
         self.view.endEditing(true)
     }

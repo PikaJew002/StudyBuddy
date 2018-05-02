@@ -11,6 +11,7 @@ import MapKit
 import CoreLocation
 
 class mapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+    // location manager, current condition string, and user that's logged in
     let locManager = CLLocationManager()
     var condition = ""
     var user: User = User()
@@ -20,9 +21,10 @@ class mapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var filters = ["", ""]  //0-subject, 1-amount <- holds value of filters
     var timeFilter: Date?
 
-    
-    var cramJams: [CramJam] = []
+    // all locations
     var locations: [Location] = []
+    // all locations and the cramjams being hosted there
+    var cramJamsInLocation: [String: [CramJam]] = [:]
     
     //map view that displays current CramJams and their locations
     @IBOutlet weak var cramJamMap: MKMapView!
@@ -30,24 +32,19 @@ class mapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         performSegue(withIdentifier: "toLocationView", sender: view)
     }
-    
+    // this will send the cramjams at that location to the viewcontroller being presented.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("TEST")
         if segue.identifier == "toLocationView" {
             let view = sender as! MKMarkerAnnotationView
             let vc = segue.destination as! LocationViewController
-            //cramJams = (presentingViewController as! mapViewController).cramJams
-            //locations = (presentingViewController as! mapViewController).locations
-            print("all cjs: "+String(cramJams.count))
-            for cj in cramJams {
-                if cj.location == (view.annotation as! LocationAnnotation).title {
-                    vc.localCramJams.append(cj)
-                    print(vc.localCramJams.count)
-                }
+            vc.localCramJams = cramJamsInLocation[(view.annotation as! LocationAnnotation).title!]!
+        } else {
+            for anno in cramJamMap.annotations {
+                cramJamMap.removeAnnotation(anno)
             }
         }
     }
-    
+    // this creates the mapView and adds a annotation view for each annotation.
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let anno = annotation as! LocationAnnotation
         
@@ -61,69 +58,64 @@ class mapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         return view
     }
-    /*
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if control == view.rightCalloutAccessoryView{
-            print(view.annotation!.title!) // annotation's title
-            //Perform a segue here to navigate to another viewcontroller
-            // On tapping the disclosure button you will get here
-        }
-    }
- */
-    
+    // this will find the center of the location.
     func centerMapOnLocation(location: CLLocation, regionRadius: CLLocationDistance, animated: Bool){ //centers map on location. I got this from https://www.raywenderlich.com/160517/mapkit-tutorial-getting-started
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
         cramJamMap.setRegion(coordinateRegion, animated: animated)
     }
-    
+    // logs the user out
     @IBAction func backToLogin(_ sender: Any) {
         user = User()
         dismiss(animated: true, completion: nil)
     }
-    
+    // this will get the users location and zoom in on the center.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let curLocation = locations[locations.count - 1]
         centerMapOnLocation(location: curLocation, regionRadius: 500, animated: true)
     }
-    
+    //sends the user to create cram jam view.
     @IBAction func toCreateCramJam(_ sender: Any) {
         
         performSegue(withIdentifier: "toCramCreate", sender: sender)
     }
-    
+    // grab all locations, and the locations with cramjams that match our filter conditions are given annotation and are put onto map.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         user = (presentingViewController as! ViewController).user
         (presentingViewController as! ViewController).user = User()
-        
-        DataController.getData(table: "cram_jam", many: true, condition: condition) { data in
+        DataController.getData(table: "location", many: true, condition: "", completion: { (data) in
             do {
                 let decoder = JSONDecoder()
-                self.cramJams = try decoder.decode([CramJam].self, from: data!)
-                DataController.getData(table: "location", many: true, condition: "", completion: { (data) in
-                    do {
-                        let decoder = JSONDecoder()
-                        self.locations = try decoder.decode([Location].self, from: data!)
-                        print("done")
-                        DispatchQueue.main.async {
-                            for l in self.locations {
+                self.locations = try decoder.decode([Location].self, from: data!)
+                DispatchQueue.main.async {
+                    for l in self.locations {
+                        var realCondition = ""
+                        if !self.condition.isEmpty {
+                            realCondition = " AND \(self.condition)"
+                        }
+                        DataController.getData(table: "cram_jam", many: true, condition: "(location = \"\(l.name)\")\(realCondition)", completion: { (data) in
+                            do {
+                                let decoder = JSONDecoder()
+                                self.cramJamsInLocation[l.name] = try decoder.decode([CramJam].self, from: data!)
                                 let anno = LocationAnnotation(location: l)
                                 self.cramJamMap.addAnnotation(anno)
-                                print("added")
+                            } catch let error {
+                                if String(decoding: data!, as: UTF8.self) == "{}" {
+                                    self.cramJamsInLocation[l.name] = []
+                                } else {
+                                    print(error.localizedDescription)
+                                    print("Page: "+String(decoding: data!, as: UTF8.self))
+                                }
                             }
-                        }
-                    } catch let error {
-                        print("location error: "+error.localizedDescription)
+                        })
                     }
-                })
-            } catch let error {
-                print("cram_jam error: "+error.localizedDescription)
-                if String(decoding: data!, as: UTF8.self) == "{}" {
-                    self.cramJams = []
                 }
+            } catch let error {
+                print("location error: "+error.localizedDescription)
+                print("Page: "+String(decoding: data!, as: UTF8.self))
             }
-        }
+        })
     }
     
     override func viewDidLoad() {

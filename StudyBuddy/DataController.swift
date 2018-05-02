@@ -10,6 +10,7 @@ import Foundation
 import MapKit
 import CoreLocation
 
+// holds a row in the user table, converted from JSON
 struct User: Codable {
     var email: String = ""
     var first_name: String = ""
@@ -18,6 +19,7 @@ struct User: Codable {
     var username: String = ""
 }
 
+// holds a row in the cram_jam table, converted from JSON
 struct CramJam: Codable {
     var id: Int
     var host: String
@@ -29,12 +31,14 @@ struct CramJam: Codable {
     var location: String
 }
 
+// holds a row in the location table, converted from JSON
 struct Location: Codable {
     var name: String = ""
     var lat: Decimal = 0.0
     var lon: Decimal = 0.0
 }
 
+// takes a location and makes it into an annotation able to me plotted on the map
 class LocationAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     let title: String?
@@ -46,6 +50,7 @@ class LocationAnnotation: NSObject, MKAnnotation {
     }
 }
 
+// class with static functions for getting (SELECT) and putting data (INSERT)
 class DataController {
     static func getData(table: String, many: Bool, condition: String, completion: @escaping (Data?)->()) {
         let id = "21232f297a57a5a743894a0e4a801fc3"

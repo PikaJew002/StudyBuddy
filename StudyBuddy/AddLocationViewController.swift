@@ -21,7 +21,7 @@ class AddLocationViewController: UIViewController {
     @IBAction func dismissKeyboard(_ sender: Any) {
         self.view.endEditing(true)
     }
-    
+    //this is a insert into our database, and adds the location to a local variable to then grab in the other view.
     @IBAction func addLocation(_ sender: UIButton) {
         let location = ((presentingViewController as! cramCreateViewController).presentingViewController as! mapViewController).locManager.location
         let lat = Decimal((location!.coordinate.latitude))
@@ -30,10 +30,8 @@ class AddLocationViewController: UIViewController {
         DataController.putData(table: "location", values: [locationName.text!.replacingOccurrences(of: " ", with: "%20"), "\(lat)", "\(lon)"], columns: []) { (didInsert) in
             DispatchQueue.main.async {
                 if didInsert {
-                    //(self.presentingViewController as! cramCreateViewController).updateLocations()
                     self.dismiss(animated: true, completion: nil)
                 } else {
-                    // throw error message
                     print("error!")
                 }
             }

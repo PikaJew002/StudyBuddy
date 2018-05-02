@@ -11,7 +11,6 @@
 		3F31C59920801AD7001633AE /* mapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F31C59820801AD7001633AE /* mapViewController.swift */; };
 		3F31C59B20801EA2001633AE /* filterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F31C59A20801EA2001633AE /* filterViewController.swift */; };
 		3F31C59D20801EB0001633AE /* cramCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F31C59C20801EB0001633AE /* cramCreateViewController.swift */; };
-		3F31C59F20801ED5001633AE /* joinCramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F31C59E20801ED4001633AE /* joinCramViewController.swift */; };
 		3F7132B32099134C00C6CD2C /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7132B22099134C00C6CD2C /* LocationViewController.swift */; };
 		3F8C06EC2097B5120017879B /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8C06EB2097B5120017879B /* AddLocationViewController.swift */; };
 		3F8C06EE2097C6880017879B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8C06ED2097C6880017879B /* DataController.swift */; };
@@ -27,7 +26,6 @@
 		3F31C59820801AD7001633AE /* mapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewController.swift; sourceTree = "<group>"; };
 		3F31C59A20801EA2001633AE /* filterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterViewController.swift; sourceTree = "<group>"; };
 		3F31C59C20801EB0001633AE /* cramCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cramCreateViewController.swift; sourceTree = "<group>"; };
-		3F31C59E20801ED4001633AE /* joinCramViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = joinCramViewController.swift; sourceTree = "<group>"; };
 		3F7132B22099134C00C6CD2C /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		3F8C06EB2097B5120017879B /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		3F8C06ED2097C6880017879B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
@@ -74,11 +72,10 @@
 				3F8D5578207D7FE600B9FB76 /* ViewController.swift */,
 				3F31C5962080138E001633AE /* registrationViewController.swift */,
 				3F31C59820801AD7001633AE /* mapViewController.swift */,
-				3F31C59A20801EA2001633AE /* filterViewController.swift */,
 				3F31C59C20801EB0001633AE /* cramCreateViewController.swift */,
-				3F31C59E20801ED4001633AE /* joinCramViewController.swift */,
 				3F8D557A207D7FE600B9FB76 /* Main.storyboard */,
 				3F7132B22099134C00C6CD2C /* LocationViewController.swift */,
+				3F31C59A20801EA2001633AE /* filterViewController.swift */,
 				3F8C06ED2097C6880017879B /* DataController.swift */,
 				3F8C06EB2097B5120017879B /* AddLocationViewController.swift */,
 				3F8D557D207D7FE600B9FB76 /* Assets.xcassets */,
@@ -166,7 +163,6 @@
 				3F8C06EC2097B5120017879B /* AddLocationViewController.swift in Sources */,
 				3F8C06EE2097C6880017879B /* DataController.swift in Sources */,
 				3F7132B32099134C00C6CD2C /* LocationViewController.swift in Sources */,
-				3F31C59F20801ED5001633AE /* joinCramViewController.swift in Sources */,
 				3F31C5972080138E001633AE /* registrationViewController.swift in Sources */,
 				3F31C59920801AD7001633AE /* mapViewController.swift in Sources */,
 				3F31C59D20801EB0001633AE /* cramCreateViewController.swift in Sources */,

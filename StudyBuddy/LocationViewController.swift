@@ -18,20 +18,19 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
     var curLocation: Location = Location()
     
     @IBOutlet weak var cramJamTableView: UITableView!
-    
+    //this sets the number of rows based on the data we collected during the create cram jam view.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 6
     }
-    
+    //these initiate the tables with how many cram jams are within an annotation.
     func numberOfSections(in tableView: UITableView) -> Int {
-        print(localCramJams.count)
         return localCramJams.count
     }
-    
+    //this is the title for the section.
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "CramJam"
     }
-    
+    //these will set the titles based on the information about the cram jams, and the details on the row column in our database.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cramJamItem")
         if indexPath.row == 0 {
@@ -60,21 +59,6 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewWillAppear(animated)
         
     }
-    
-    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toLocationView" {
-            let view = sender as! MKMarkerAnnotationView
-            cramJams = (presentingViewController as! mapViewController).cramJams
-            locations = (presentingViewController as! mapViewController).locations
-            print("all cjs: "+String(cramJams.count))
-            for cj in cramJams {
-                if cj.location == (view.annotation as! LocationAnnotation).title {
-                    localCramJams.append(cj)
-                    print(localCramJams.count)
-                }
-            }
-        }
-    } */
     
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

@@ -19,14 +19,13 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var maxAttendees: UITextField!
     @IBOutlet weak var errorMessageLabel: UILabel!
     
+    // all locations, the currently selected location, and user that's logged in
     var locations: [Location] = []
     var location: Location = Location()
     var user: User = User()
     
-    // Need to connect picker view, and add stuff to it later.
-    // ^ I did that - AE
+    // creates new cramjam
     @IBAction func backToMapView(_ sender: UIButton) {
-        //print(dateFormatter.string(from: startTime.date))
         sender.isEnabled = false
         // validate input
         // none of the fields are empty
@@ -63,37 +62,42 @@ class cramCreateViewController: UIViewController, UIPickerViewDataSource, UIPick
             }
         } else {
             sender.isEnabled = true
-            errorMessageLabel.text = "Please make sure all fields are fillled!"
+            errorMessageLabel.text = "Please make sure all fields are filled!"
         }
     }
+    // cancel creating a cram jam
+    @IBAction func cancel(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
     
+    // dismisses keyboard
     @IBAction func dismissKeyboard(_ sender: Any) {
         self.view.endEditing(true)
     }
     
+    // specifies number of components in picker
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+    // specifies numer of rows in the component
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return locations.count
     }
-    
+    // sets the title for each row (location name)
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return locations[row].name
     }
-    
+    // sets currently selected location
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         location = locations[row]
     }
-    
+    // copies data from presenting view controller to this view controller and queries for locations to populate the picker with
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let date = Calendar.current.date(byAdding: Calendar.Component.hour, value: 1, to: Date(), wrappingComponents: true)
         endTime.setDate(date!, animated: false)
         user = (presentingViewController as! mapViewController).user
         // get users location data for computing distances
-        //updateLocations()
         // get all saved locations from database
         DataController.getData(table: "location", many: true, condition: "") { (data) in
             DispatchQueue.main.async {

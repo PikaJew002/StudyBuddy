@@ -21,30 +21,33 @@ class filterViewController: UIViewController {
     @IBOutlet weak var timePicker: UIDatePicker!
     
     
-    func filterString() -> String{
+    func filterString() -> String{  //returns a string containing a sql where statement
         var condition = ""
         if (subjectSwitch.isOn){  //user wants to filter by subject
             if (SubjectTextField != nil){
-                    condition += "subject%20=%20%22\(SubjectTextField.text!)%22"
+                    condition += "(subject = \"\(SubjectTextField.text!)\") AND "
                 }
             }
         if (timeSwitch.isOn){
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyyMMddhhmmss"
-            condition += "cast(%22\(dateFormatter.string(from: timePicker.date))%22%20as%20date)%20between%20start_time%20and%20end_time"
+            dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+            condition += "(start_time <= CAST(\"\(dateFormatter.string(from: timePicker.date))\" AS DATETIME) AND end_time >= CAST(\"\(dateFormatter.string(from: timePicker.date))\" AS DATETIME)) AND "
         }
         if (amountSwitch.isOn){
             if (amountTextField.text != nil){
-                condition += "max_peeps%20<=%20\(amountTextField.text!)"
-                }
+                condition += "(max_peeps <= \(amountTextField.text!)) AND "
+            }
+        }
+        if !condition.isEmpty {
+            condition.removeLast(5)
         }
         return condition
     }
-    
+    // this will dismiss the user's keyboard when typing
     @IBAction func dismissKeyboard(_ sender: Any) {
         self.view.endEditing(true)
     }
-    
+    // These three functions are when the switchs are activated the filter text and labels are shown.
     @IBAction func showSubject(_ sender: UISwitch) {
         SubjectLabel.isHidden = !subjectSwitch.isOn
         SubjectTextField.isHidden = !subjectSwitch.isOn
@@ -59,7 +62,7 @@ class filterViewController: UIViewController {
         amountLabel.isHidden = !amountSwitch.isOn
         amountTextField.isHidden = !amountSwitch.isOn
     }
-    
+    //  goes back to the map view, and will send data pertaining to things we want to keep when we return to this view.
     @IBAction func backToMapView(_ sender: UIButton) {
         let mc = (presentingViewController as! mapViewController)
         mc.condition = filterString()
@@ -84,7 +87,7 @@ class filterViewController: UIViewController {
         
         dismiss(animated: true, completion: nil)
     }
-    
+    // this will set the switches to be on or off based on the information sent in the function above.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         let mc = (presentingViewController as! mapViewController)
@@ -107,7 +110,7 @@ class filterViewController: UIViewController {
             amountTextField.text = mc.filters[1]
         }
     }
-    
+    //first time the switches will be turned off, and the labels and such will be hidden.
     override func viewDidLoad() {
         super.viewDidLoad()
         subjectSwitch.setOn(false, animated: false)

@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var errorMessageLabel: UILabel!
     
     var user: User = User()
-    
+    // This will check the database if the email matches the username and will allow access if so. otherwise it will send error messages.
     @IBAction func login(_ sender: UIButton) {
         if !username.text!.isEmpty && !password.text!.isEmpty {
             DataController.getData(table: "user", many: false, condition: "email = \"\(username.text!)\"") { (data) in
@@ -55,6 +55,7 @@ class ViewController: UIViewController {
     @IBAction func dismissKeyboard(_ sender: Any) {
         self.view.endEditing(true)
     }
+    //this will send the user to register.
     @IBAction func toRegistrationView(_ sender: UIButton) {
         user = User()
         performSegue(withIdentifier: "toRegistrationView", sender: self)
