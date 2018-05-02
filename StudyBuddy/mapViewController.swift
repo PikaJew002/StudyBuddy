@@ -31,6 +31,23 @@ class mapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         performSegue(withIdentifier: "toLocationView", sender: view)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("TEST")
+        if segue.identifier == "toLocationView" {
+            let view = sender as! MKMarkerAnnotationView
+            let vc = segue.destination as! LocationViewController
+            //cramJams = (presentingViewController as! mapViewController).cramJams
+            //locations = (presentingViewController as! mapViewController).locations
+            print("all cjs: "+String(cramJams.count))
+            for cj in cramJams {
+                if cj.location == (view.annotation as! LocationAnnotation).title {
+                    vc.localCramJams.append(cj)
+                    print(vc.localCramJams.count)
+                }
+            }
+        }
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let anno = annotation as! LocationAnnotation
         

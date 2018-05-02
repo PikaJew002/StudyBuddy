@@ -27,20 +27,31 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
         print(localCramJams.count)
         return localCramJams.count
     }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "CramJam"
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cramJamItem")
         if indexPath.row == 0 {
             cell!.textLabel!.text = localCramJams[indexPath.section].host
+            cell!.detailTextLabel!.text = "Host"
         } else if indexPath.row == 1 {
             cell!.textLabel!.text = localCramJams[indexPath.section].subject
+            cell!.detailTextLabel!.text = "Subject"
         } else if indexPath.row == 2 {
             cell!.textLabel!.text = localCramJams[indexPath.section].description
+            cell!.detailTextLabel!.text = "Description"
         } else if indexPath.row == 3 {
             cell!.textLabel!.text = localCramJams[indexPath.section].start_time
+            cell!.detailTextLabel!.text = "Start Time"
         } else if indexPath.row == 4 {
             cell!.textLabel!.text = localCramJams[indexPath.section].end_time
+            cell!.detailTextLabel!.text = "End Time"
         } else if indexPath.row == 5 {
             cell!.textLabel!.text = String(localCramJams[indexPath.section].max_peeps)
+            cell!.detailTextLabel!.text = "Max Amount of Atendees"
         }
         return cell!
     }
@@ -63,7 +74,12 @@ class LocationViewController: UIViewController, UITableViewDelegate, UITableView
                 }
             }
         }
-    }*/
+    } */
+    
+    @IBAction func cancel(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
