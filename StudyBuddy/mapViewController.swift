@@ -66,6 +66,7 @@ class mapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     // logs the user out
     @IBAction func backToLogin(_ sender: Any) {
         user = User()
+        (presentingViewController as! ViewController).user = User()
         dismiss(animated: true, completion: nil)
     }
     // this will get the users location and zoom in on the center.
@@ -83,7 +84,6 @@ class mapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         super.viewWillAppear(animated)
         
         user = (presentingViewController as! ViewController).user
-        (presentingViewController as! ViewController).user = User()
         DataController.getData(table: "location", many: true, condition: "", completion: { (data) in
             do {
                 let decoder = JSONDecoder()
